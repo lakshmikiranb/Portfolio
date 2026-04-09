@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakshmi Kiran B | IT Support Engineer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Orbitron&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;font-family:Poppins;background:#0f172a;color:#fff;}
+nav{background:#020617;padding:15px;text-align:center;color:#38bdf8;font-weight:bold;}
+header{text-align:center;padding:70px;background:linear-gradient(135deg,#2563eb,#1e3a8a);}
+header h1{font-family:Orbitron;}
+
+section{padding:50px;max-width:1000px;margin:auto;}
+.card{background:#1e293b;padding:20px;border-radius:10px;margin-bottom:20px;}
+h2{color:#38bdf8;}
+
+a{color:#38bdf8;text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+button{padding:10px;background:#38bdf8;border:none;cursor:pointer;margin-top:10px;}
+
+input,textarea{width:100%;padding:10px;margin:5px 0;border:none;border-radius:5px;}
+
+.hidden{opacity:0;transform:translateY(30px);transition:1s;}
+.show{opacity:1;transform:translateY(0);}
+
+/* WhatsApp Button */
+#whatsapp{
+position:fixed;
+bottom:80px;
+right:20px;
+background:#25D366;
+padding:15px;
+border-radius:50%;
+font-size:20px;
+}
+
+/* Admin */
+#adminPanel{display:none;position:fixed;bottom:0;width:100%;background:#020617;padding:10px;text-align:center;}
+#adminControls,#uploadArea{display:none;}
+</style>
+</head>
+
+<body>
+
+<nav>Lakshmi Kiran B | IT Support Engineer</nav>
+
+<header>
+<h1>LAKSHMI KIRAN B</h1>
+<p>IT Support Engineer · L1/L2 Technical Support · System Administration</p>
+
+<p>
+📍 Bengaluru |
+📞 <a href="tel:+918374056396">+91-8374056396</a> |
+✉ <a href="mailto:lakshmi2000kiran@gmail.com">lakshmi2000kiran@gmail.com</a>
+</p>
+
+<p>
+🔗 <a href="https://linkedin.com/in/lakshmi-kiran-b-76a6581b5" target="_blank">
+linkedin.com/in/lakshmi-kiran-b-76a6581b5
+</a>
+</p>
+</header>
+
+<section class="hidden">
+<h2>Professional Summary</h2>
+<div class="card" id="about">
+Performance-driven IT Support Engineer with hands-on experience supporting 150+ users in enterprise environments. Specialized in Windows Server administration, Active Directory management, and network troubleshooting.
+</div>
+</section>
+
+<section class="hidden">
+<h2>Work Experience</h2>
+<div class="card" id="experience">
+<b>IT Executive – Athena BPO (2024–Present)</b>
+<ul>
+<li>Support 150+ users</li>
+<li>Active Directory & GPO</li>
+<li>Reduced setup time by 40%</li>
+<li>Server troubleshooting</li>
+</ul>
+</div>
+</section>
+
+<section class="hidden">
+<h2>Projects</h2>
+<div class="card" id="projects">
+Enterprise Windows Deployment<br>
+PST Recovery & Email Migration
+</div>
+</section>
+
+<section class="hidden">
+<h2>Skills</h2>
+<div class="card" id="skills">
+Windows Server, AD, Networking, DNS, DHCP, Office 365, RDP
+</div>
+</section>
+
+<section class="hidden">
+<h2>Resume</h2>
+<div class="card">
+<button onclick="downloadResume()">Download Resume</button>
+
+<div id="uploadArea">
+<input type="file" id="file">
+<button onclick="uploadResume()">Upload Resume</button>
+</div>
+</div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="hidden">
+<h2>Contact Me</h2>
+<div class="card">
+
+<form onsubmit="sendMail(event)">
+<input type="text" id="name" placeholder="Your Name" required>
+<input type="email" id="userEmail" placeholder="Your Email" required>
+<textarea id="message" placeholder="Your Message" required></textarea>
+
+<button type="submit">Send Message</button>
+</form>
+
+</div>
+</section>
+
+<!-- WHATSAPP -->
+<a id="whatsapp" href="https://wa.me/918374056396" target="_blank">💬</a>
+
+<!-- ADMIN -->
+<div id="adminPanel">
+<input id="email" placeholder="Admin Email">
+<input id="password" type="password" placeholder="Password">
+
+<div>
+<span id="captchaText"></span>
+<input id="captchaInput" placeholder="Captcha">
+</div>
+
+<button onclick="login()">Login</button>
+
+<div id="adminControls">
+<button onclick="enableEdit()">Edit</button>
+<button onclick="saveData()">Save</button>
+</div>
+</div>
+
+<script>
+
+// ANIMATION
+const obs=new IntersectionObserver(e=>{
+e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("show");});
+});
+document.querySelectorAll(".hidden").forEach(el=>obs.observe(el));
+
+// SECRET ADMIN ACCESS
+document.addEventListener("keydown",e=>{
+if(e.ctrlKey && e.shiftKey && e.key==="A") adminPanel.style.display="block";
+});
+
+let lastTap=0;
+document.addEventListener("touchend",()=>{
+let now=new Date().getTime();
+if(now-lastTap<300) adminPanel.style.display="block";
+lastTap=now;
+});
+
+// ADMIN CONFIG
+const ADMIN_EMAIL="lakshmi2000kiran@gmail.com";
+const ADMIN_PASSWORD="@Lakshmi2000";
+
+let captcha=Math.random().toString(36).substring(2,7);
+captchaText.innerText=captcha;
+
+let isAdmin=false;
+
+function login(){
+if(captchaInput.value!==captcha)return alert("Wrong Captcha");
+
+if(email.value===ADMIN_EMAIL && password.value===ADMIN_PASSWORD){
+isAdmin=true;
+adminControls.style.display="block";
+uploadArea.style.display="block";
+alert("Admin Login Success");
+}else alert("Invalid Login");
+}
+
+// EDIT
+function enableEdit(){
+if(!isAdmin)return;
+document.querySelectorAll(".card").forEach(c=>c.contentEditable=true);
+}
+
+// SAVE
+function saveData(){
+["about","experience","projects","skills"].forEach(id=>{
+localStorage.setItem(id,document.getElementById(id).innerHTML);
+});
+alert("Saved");
+}
+
+// RESUME
+function uploadResume(){
+let file=document.getElementById("file").files[0];
+let reader=new FileReader();
+reader.onload=e=>{
+localStorage.setItem("resume",e.target.result);
+alert("Resume Updated");
+};
+reader.readAsDataURL(file);
+}
+
+function downloadResume(){
+let data=localStorage.getItem("resume");
+if(!data)return alert("No resume uploaded");
+let a=document.createElement("a");
+a.href=data;
+a.download="Lakshmi_Kiran_Resume.pdf";
+a.click();
+}
+
+// CONTACT FORM
+function sendMail(e){
+e.preventDefault();
+
+let name=document.getElementById("name").value;
+let email=document.getElementById("userEmail").value;
+let message=document.getElementById("message").value;
+
+let mailLink=`mailto:lakshmi2000kiran@gmail.com?subject=Message from ${name}&body=${message} (Reply to: ${email})`;
+
+window.location.href=mailLink;
+}
+
+</script>
+
+</body>
+</html>
